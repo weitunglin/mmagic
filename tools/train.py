@@ -9,6 +9,7 @@ from mmengine.runner import Runner
 
 from mmagic.utils import print_colored_log
 
+import model
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a model')
@@ -102,6 +103,9 @@ def main():
 
     print_colored_log(f'Working directory: {cfg.work_dir}')
     print_colored_log(f'Log directory: {runner._log_dir}')
+
+    print_colored_log(f'{len(runner.train_dataloader.dataset)}')
+    print_colored_log(f'{len(runner.val_dataloader.dataset)}')
 
     # start training
     runner.train()

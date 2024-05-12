@@ -112,7 +112,7 @@ class BaseSampleWiseMetric(BaseMetric):
     def process_image(self, gt, pred, mask):
         raise NotImplementedError
 
-    def evaluate(self) -> dict:
+    def evaluate(self, size) -> dict:
         assert hasattr(self, 'size'), (
             'Cannot find \'size\', please make sure \'self.prepare\' is '
             'called correctly.')
