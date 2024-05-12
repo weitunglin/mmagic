@@ -10,6 +10,7 @@ from mmengine.runner import Runner
 
 from mmagic.utils import print_colored_log
 
+import model
 
 # TODO: support fuse_conv_bn, visualization, and format_only
 def parse_args():

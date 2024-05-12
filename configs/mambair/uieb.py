@@ -1,3 +1,5 @@
+img_scale = (256, 256)
+
 pipeline = [
     dict(
         type='LoadImageFromFile',
@@ -14,7 +16,7 @@ pipeline = [
     dict(
         type='Resize',
         keys=['img', 'gt'],
-        scale=(256, 256),
+        scale=img_scale,
     ),
     dict(type='PackInputs')
 ]
@@ -54,8 +56,8 @@ val_dataloader = dict(
 test_dataloader = val_dataloader
 
 evaluator = [
-    dict(type='SSIM', prefix='uie'),
-    dict(type='PSNR', prefix='uie'),
+    dict(type='SSIM', convert_to='Y', prefix='uie'),
+    dict(type='PSNR', convert_to='Y', prefix='uie'),
 ]
 
 test_evaluator = val_evaluator = evaluator
