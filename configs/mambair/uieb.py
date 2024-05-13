@@ -21,7 +21,7 @@ pipeline = [
     dict(type='PackInputs')
 ]
 
-data_root = '/home/allen/workspace/seamamba/data/UIEB/'
+data_root = '/home/allen/workspace/seamamba/data/uieb_t90/'
 
 train_dataloader = dict(
     batch_size=8,
