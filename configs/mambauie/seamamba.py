@@ -39,3 +39,4 @@ val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
 find_unused_parameters = True
+resume = True

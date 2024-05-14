@@ -25,7 +25,7 @@ data_root = '/home/allen/workspace/seamamba/data/uieb_t90/'
 
 train_dataloader = dict(
     batch_size=8,
-    num_workers=4,
+    num_workers=8,
     persistent_workers=True,
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=True),
@@ -40,7 +40,7 @@ train_dataloader = dict(
 
 val_dataloader = dict(
     batch_size=8,
-    num_workers=4,
+    num_workers=8,
     persistent_workers=True,
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=False),
@@ -56,6 +56,8 @@ val_dataloader = dict(
 test_dataloader = val_dataloader
 
 evaluator = [
+    dict(type='MAE', prefix='uie'),
+    dict(type='MSE', prefix='uie'),
     dict(type='SSIM', convert_to='Y', prefix='uie'),
     dict(type='PSNR', convert_to='Y', prefix='uie'),
 ]
