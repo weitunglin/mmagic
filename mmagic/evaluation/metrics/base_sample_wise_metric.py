@@ -113,10 +113,12 @@ class BaseSampleWiseMetric(BaseMetric):
         raise NotImplementedError
 
     def evaluate(self, size) -> dict:
+        """
         assert hasattr(self, 'size'), (
             'Cannot find \'size\', please make sure \'self.prepare\' is '
             'called correctly.')
-        return super().evaluate(self.size)
+        """
+        return super().evaluate(size)
 
     def prepare(self, module: nn.Module, dataloader: DataLoader):
         self.size = len(dataloader.dataset)
