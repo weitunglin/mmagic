@@ -107,6 +107,9 @@ def main():
     print_colored_log(f'{len(runner.train_dataloader.dataset)}')
     print_colored_log(f'{len(runner.val_dataloader.dataset)}')
 
+    print_colored_log('Model architecture:')
+    print_colored_log(runner.model)
+
     # start training
     runner.train()
 
