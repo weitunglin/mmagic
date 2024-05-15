@@ -21,6 +21,49 @@ pipeline = [
     dict(type='PackInputs')
 ]
 
+train_pipeline = [
+    dict(
+        type='LoadImageFromFile',
+        key='img',
+        color_type='color',
+        channel_order='rgb',
+        imdecode_backend='cv2'),
+    dict(
+        type='LoadImageFromFile',
+        key='gt',
+        color_type='color',
+        channel_order='rgb',
+        imdecode_backend='cv2'),
+    dict(
+        type='Resize',
+        keys=['img', 'gt'],
+        scale=img_scale,
+    ),
+    dict(type='RandomFlip', prob=0.5, direction='horizontal'),
+    dict(type='PackInputs')
+]
+
+val_pipeline = [
+    dict(
+        type='LoadImageFromFile',
+        key='img',
+        color_type='color',
+        channel_order='rgb',
+        imdecode_backend='cv2'),
+    dict(
+        type='LoadImageFromFile',
+        key='gt',
+        color_type='color',
+        channel_order='rgb',
+        imdecode_backend='cv2'),
+    dict(
+        type='Resize',
+        keys=['img', 'gt'],
+        scale=img_scale,
+    ),
+    dict(type='PackInputs')
+]
+
 data_root = '/home/allen/workspace/seamamba/data/uieb_t90/'
 
 train_dataloader = dict(
@@ -34,7 +77,7 @@ train_dataloader = dict(
         metainfo=dict(dataset_type='UIEB', task_name='denoising'),
         data_root=data_root+'train',
         data_prefix=dict(img='raw-890', gt='reference-890'),
-        pipeline=pipeline
+        pipeline=train_pipeline
     ),
 )
 
@@ -49,7 +92,7 @@ val_dataloader = dict(
         metainfo=dict(dataset_type='UIEB', task_name='denoising'),
         data_root=data_root+'valid',
         data_prefix=dict(img='raw-890', gt='reference-890'),
-        pipeline=pipeline
+        pipeline=val_pipeline
     ),
 )
 

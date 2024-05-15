@@ -13,7 +13,7 @@ experiment_name = f'seamamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
 
-img_scale = (512, 512)
+img_scale = (256, 256)
 
 pipeline = [
     dict(
