@@ -1,14 +1,13 @@
 """
-defaultdict(<class 'float'>, {'conv': 0.41472, 'layer_norm': 0.55296, 'linear': 4.329697536, 'einsum': 1.26074, 'PythonOp.Sele
-ctiveScanFn': 1.9242784})
-params 120100 GFLOPs 8.482395936
+defaultdict(<class 'float'>, {'conv': 0.4644864, 'layer_norm': 0.635904, 'linear': 5.330571264, 'einsum': 0.97312, 'PythonOp.SelectiveScanFn': 1.3271024})
+params 135268 GFLOPs 8.731184063999999
 """
 
 _base_ = [
     './seamamba.py'
 ]
 
-ver = 'v13'
+ver = 'v14'
 experiment_name = f'seamamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -27,12 +26,10 @@ batch_size = 32
 train_dataloader = dict(batch_size=batch_size)
 val_dataloader = dict(batch_size=batch_size)
 
-custom_hooks = [dict(type='BasicVisualizationHook', interval=3)]
-
 optim_wrapper = dict(
     dict(
-        type='OptimWrapper',
-        optimizer=dict(type='AdamW', lr=0.0001, betas=(0.9, 0.999), weight_decay=0.5)))
+        type='AmpOptimWrapper',
+        optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
 
 max_epochs = 800
 param_scheduler = [
@@ -46,4 +43,5 @@ train_cfg = dict(by_epoch=True, max_epochs=max_epochs)
 visualizer = dict(
     vis_backends=[dict(type='LocalVisBackend'), dict(type='WandbVisBackend', init_kwargs=dict(project='seamamba', name=ver))])
 
-auto_scale_lr = dict(enable=True)
+auto_scale_lr = dict(enable=False)
+default_hooks = dict(logger=dict(interval=10))
