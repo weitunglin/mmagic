@@ -39,7 +39,10 @@ train_pipeline = [
         keys=['img', 'gt'],
         scale=img_scale,
     ),
-    dict(type='RandomFlip', prob=0.5, direction='horizontal'),
+    dict(type='Flip',
+        keys=['img', 'gt'],
+        flip_ratio=0.5,
+        direction='horizontal'),
     dict(type='PackInputs')
 ]
 

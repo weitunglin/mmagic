@@ -50,6 +50,8 @@ batch_size = 32
 train_dataloader = dict(batch_size=batch_size)
 val_dataloader = dict(batch_size=batch_size)
 
+custom_hooks = [dict(type='BasicVisualizationHook', interval=2)]
+
 optim_wrapper = dict(
     dict(
         type='OptimWrapper',
