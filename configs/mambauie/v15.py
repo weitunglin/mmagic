@@ -46,4 +46,4 @@ visualizer = dict(
 auto_scale_lr = dict(enable=False)
 default_hooks = dict(logger=dict(interval=5))
 
-custom_hooks = [dict(type='BasicVisualizationHook', interval=3)]
+custom_hooks = [dict(type='BasicVisualizationHook', interval=1)]

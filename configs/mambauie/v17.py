@@ -1,13 +1,13 @@
 """
-defaultdict(<class 'float'>, {'conv': 0.5640192, 'layer_norm': 0.82944, 'linear': 6.934173696, 'einsum': 1.45968, 'PythonOp.SelectiveScanFn': 1.9906536})
-params 183078 GFLOPs 11.777966496000001
+defaultdict(<class 'float'>, {'conv': 0.4644864, 'layer_norm': 0.635904, 'linear': 5.330571264, 'einsum': 1.68092, 'PythonOp.SelectiveScanFn': 2.5655312})
+params 153700 GFLOPs 10.677412864
 """
 
 _base_ = [
     './seamamba.py'
 ]
 
-ver = 'v16'
+ver = 'v17'
 experiment_name = f'seamamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -16,12 +16,12 @@ save_dir = './work_dirs/'
 model = dict(
     type='BaseEditModel',
     generator=dict(
+        _delete_=True,
         type='MM_VSSM',
-        depths=[1]*6,
-        dims=[48]*6,
+        depths=[1]*4,
+        dims=[48]*4,
         ver=ver,
-    ),
-    pixel_loss=dict(type='CharbonnierLoss'))
+    ))
 
 batch_size = 32
 train_dataloader = dict(batch_size=batch_size)
@@ -30,14 +30,14 @@ val_dataloader = dict(batch_size=batch_size)
 optim_wrapper = dict(
     dict(
         type='AmpOptimWrapper',
-        optimizer=dict(type='AdamW', lr=0.00025, betas=(0.9, 0.999))))
+        optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
 
 max_epochs = 800
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=0.001, by_epoch=True, begin=0,
         end=15),
-    dict(type='CosineAnnealingLR', by_epoch=True, T_max=max_epochs-200, convert_to_iter_based=True, eta_min=1e-5),]
+    dict(type='CosineAnnealingLR', by_epoch=True, T_max=max_epochs, convert_to_iter_based=True),]
 
 train_cfg = dict(by_epoch=True, max_epochs=max_epochs)
 
@@ -46,5 +46,4 @@ visualizer = dict(
 
 auto_scale_lr = dict(enable=False)
 default_hooks = dict(logger=dict(interval=5))
-
 custom_hooks = [dict(type='BasicVisualizationHook', interval=3)]

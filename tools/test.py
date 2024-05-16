@@ -67,22 +67,28 @@ def main():
     cfg.load_from = args.checkpoint
 
     # build the runner from config
+    # runner = Runner.from_cfg(cfg)
+
+    # print_colored_log(f'Working directory: {cfg.work_dir}')
+    # print_colored_log(f'Log directory: {runner._log_dir}')
+
+    # if args.out:
+
+    #     class SaveMetricHook(Hook):
+
+    #         def after_test_epoch(self, _, metrics=None):
+    #             if metrics is not None:
+    #                 mmengine.dump(metrics, args.out)
+
+    #     runner.register_hook(SaveMetricHook(), 'LOWEST')
+
+    # # start testing
+    # runner.test()
+
+    cfg.work_dir = osp.join(cfg.work_dir, 'val')
+    cfg.test_dataloader = cfg.val_dataloader
+    cfg.test_evaluator = cfg.val_evaluator
     runner = Runner.from_cfg(cfg)
-
-    print_colored_log(f'Working directory: {cfg.work_dir}')
-    print_colored_log(f'Log directory: {runner._log_dir}')
-
-    if args.out:
-
-        class SaveMetricHook(Hook):
-
-            def after_test_epoch(self, _, metrics=None):
-                if metrics is not None:
-                    mmengine.dump(metrics, args.out)
-
-        runner.register_hook(SaveMetricHook(), 'LOWEST')
-
-    # start testing
     runner.test()
 
 
