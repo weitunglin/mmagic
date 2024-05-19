@@ -30,10 +30,19 @@ load_from = None
 resume = False
 
 vis_backends = [dict(type='LocalVisBackend'), dict(type='WandbVisBackend', init_kwargs=dict(project='seamamba'))]
+
 visualizer = dict(
     type='ConcatImageVisualizer',
     vis_backends=vis_backends,
     fn_key='img_path',
     img_keys=['pred_img'],
     bgr2rgb=True)
+
+# visualizer = dict(
+#     type='ConcatImageVisualizer',
+#     vis_backends=vis_backends,
+#     fn_key='gt_path',
+#     img_keys=['gt_img', 'input', 'pred_img'],
+#     bgr2rgb=True)
+
 custom_hooks = [dict(type='BasicVisualizationHook', interval=1)]

@@ -10,7 +10,7 @@ default_hooks = dict(
         interval=5000,
         out_dir=save_dir,
         by_epoch=False,
-        max_keep_ckpts=4,
+        # max_keep_ckpts=4,
         save_best=['uie/SSIM', 'uie/PSNR'],
         rule='greater',
     ),

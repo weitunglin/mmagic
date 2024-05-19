@@ -67,7 +67,10 @@ def main():
     cfg.load_from = args.checkpoint
 
     # build the runner from config
-    # runner = Runner.from_cfg(cfg)
+    runner = Runner.from_cfg(cfg)
+
+    # start testing
+    runner.test()
 
     # print_colored_log(f'Working directory: {cfg.work_dir}')
     # print_colored_log(f'Log directory: {runner._log_dir}')
@@ -81,9 +84,6 @@ def main():
     #                 mmengine.dump(metrics, args.out)
 
     #     runner.register_hook(SaveMetricHook(), 'LOWEST')
-
-    # # start testing
-    # runner.test()
 
     cfg.work_dir = osp.join(cfg.work_dir, 'val')
     cfg.test_dataloader = cfg.val_dataloader
