@@ -1,13 +1,13 @@
 """
-defaultdict(<class 'float'>, {'conv': 0.150994944, 'layer_norm': 0.23986176, 'upsample_bilinear2d': 0.001572864, 'linear': 3.553175808, 'einsum': 0.72971, 'PythonOp.SelectiveScanFn': 1.094788512})
-params 1023346 GFLOPs 5.770103888
+defaultdict(<class 'float'>, {'conv': 0.088080384, 'layer_norm': 0.13893632, 'upsample_bilinear2d': 0.001048576, 'linear': 0.774931456, 'einsum': 0.452967, 'PythonOp.SelectiveScanFn': 0.729815008})
+params 303418 GFLOPs 2.1857787440000003
 """
 
 _base_ = [
     './seamamba.py'
 ]
 
-ver = 'v37'
+ver = 'v39'
 experiment_name = f'seamamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -18,13 +18,13 @@ model = dict(
     generator=dict(
         type='MM_VSSM',
         depths=[1]*4,
-        dims=[96]*4,
+        dims=[64]*4,
         d_state=16,
         bidir='a',
         biattn=True,
         biattn_act_ratio=0.125,
         residual=False,
-        last_skip=True,
+        last_skip=False,
         pixel=False,
         pos_embed=True,
         conv=False,
@@ -56,3 +56,4 @@ visualizer = dict(
 
 auto_scale_lr = dict(enable=False)
 default_hooks = dict(logger=dict(interval=10))
+custom_hooks = [dict(type='BasicVisualizationHook', interval=5)]
