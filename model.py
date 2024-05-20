@@ -26,7 +26,8 @@ build = import_abspy(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../classification/"),
 )
 # Backbone_VSSM: nn.Module = build.vmamba.Backbone_VSSM
-Backbone_VSSM: nn.Module = build.seamamba.Backbone_VSSM
+# Backbone_VSSM: nn.Module = build.seamamba.Backbone_VSSM
+Backbone_VSSM: nn.Module = build.lwmamba.Backbone_VSSM
 
 @MODELS_MMSEG.register_module()
 @MODELS_MMDET.register_module()
