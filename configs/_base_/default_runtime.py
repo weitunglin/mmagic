@@ -27,7 +27,7 @@ log_level = 'INFO'
 log_processor = dict(type='LogProcessor', window_size=100, by_epoch=False)
 
 load_from = None
-resume = False
+resume = True
 
 vis_backends = [dict(type='LocalVisBackend'), dict(type='WandbVisBackend', init_kwargs=dict(project='seamamba'))]
 visualizer = dict(

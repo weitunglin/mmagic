@@ -4,10 +4,15 @@ params 21513120 GFLOPs 7.886421304
 
 _base_ = [
     '../_base_/default_runtime.py',
-    './uieb.py'
+    './uieb.py',
+    './lwmamba.py'
 ]
 
-ver = "v0"
+ver = 'v0'
+experiment_name = f'seamamba_uieb_{ver}'
+work_dir = f'./work_dirs/{experiment_name}'
+save_dir = './work_dirs/'
+
 model = dict(
     type='BaseEditModel',
     generator=dict(
@@ -23,7 +28,7 @@ model = dict(
     )
 )
 
-batch_size = 1
+batch_size = 16
 train_dataloader = dict(batch_size=batch_size)
 val_dataloader = dict(batch_size=batch_size)
 
@@ -39,8 +44,6 @@ param_scheduler = [
     dict(type='CosineAnnealingLR', by_epoch=True, begin=15, T_max=800, convert_to_iter_based=True)]
 
 train_cfg = dict(by_epoch=True, max_epochs=max_epochs)
-val_cfg = dict(type='ValLoop')
-test_cfg = dict(type='TestLoop')
 
 visualizer = dict(
     vis_backends=[dict(type='LocalVisBackend'), dict(type='WandbVisBackend', init_kwargs=dict(project='seamamba', name=ver))])

@@ -1,7 +1,3 @@
-experiment_name = 'lwmamba_uieb'
-work_dir = f'./work_dirs/{experiment_name}'
-save_dir = './work_dirs/'
-
 optim_wrapper = dict(
     dict(
         type='OptimWrapper',
@@ -13,11 +9,10 @@ param_scheduler = [
         end=15),
     dict(type='CosineAnnealingLR', by_epoch=True, T_max=800, convert_to_iter_based=True),]
 
-auto_scale_lr=dict(_delete_=True,base_batch_size=8, enable=True)
+auto_scale_lr=dict(_delete_=True,base_batch_size=8, enable=False)
 
 train_cfg = dict(by_epoch=True, max_epochs=800)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
 find_unused_parameters = True
-resume = True
