@@ -1,6 +1,4 @@
 """
-v2 w/o last_skip
-params 12072486 GFLOPs 5.869288816
 """
 
 _base_ = [
@@ -9,7 +7,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v5'
+ver = 'v9'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -27,8 +25,10 @@ model = dict(
         pos_embed=True,
         last_skip=False,
         patch_size=4,
+        mamba_up=True,
+        conv_down=True,
     ),
-    pixel_loss=dict(type='CharbonnierLoss', loss_weight=1.0, reduction='mean'),
+    pixel_loss=dict(type='L1Loss', loss_weight=1.0, reduction='mean'),
     data_preprocessor=dict(
         type='DataPreprocessor',
         mean=[0., 0., 0.],

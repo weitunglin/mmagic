@@ -1,6 +1,5 @@
 """
-v2 w/o last_skip
-params 12072486 GFLOPs 5.869288816
+params 3.247 M, FLOPs 4.983 G
 """
 
 _base_ = [
@@ -9,7 +8,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v5'
+ver = 'v7'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -18,11 +17,11 @@ model = dict(
     type='BaseEditModel',
     generator=dict(
         type='MM_VSSM',
-        depths=[1,1,1,1],
+        depths=[1,1,1],
         dims=96,
         pixel_branch=True,
         bi_scan=True,
-        final_refine=True,
+        final_refine=False,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,
@@ -43,7 +42,7 @@ val_dataloader = dict(batch_size=batch_size)
 optim_wrapper = dict(
     dict(
         type='AmpOptimWrapper',
-        optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
+        optimizer=dict(type='AdamW', lr=0.00015, betas=(0.9, 0.999), weight_decay=0.5)))
 
 max_epochs = 400
 param_scheduler = [

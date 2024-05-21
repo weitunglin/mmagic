@@ -1,6 +1,5 @@
 """
-v2 w/o last_skip
-params 12072486 GFLOPs 5.869288816
+params 2.015 M, FLOPs 7.041 G
 """
 
 _base_ = [
@@ -9,7 +8,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v5'
+ver = 'v8'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -18,11 +17,11 @@ model = dict(
     type='BaseEditModel',
     generator=dict(
         type='MM_VSSM',
-        depths=[1,1,1,1],
-        dims=96,
+        depths=[2,2,2,2],
+        dims=[96,96,96,96],
         pixel_branch=True,
         bi_scan=True,
-        final_refine=True,
+        final_refine=False,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,

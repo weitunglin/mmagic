@@ -1,6 +1,5 @@
 """
-v2 w/o last_skip
-params 12072486 GFLOPs 5.869288816
+params 10.235 M, FLOPs 5.475 G
 """
 
 _base_ = [
@@ -9,7 +8,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v5'
+ver = 'v10'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -22,11 +21,15 @@ model = dict(
         dims=96,
         pixel_branch=True,
         bi_scan=True,
-        final_refine=True,
+        final_refine=False,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,
         patch_size=4,
+        mamba_up=True,
+        conv_down=False,
+        unet_down=False,
+        unet_up=False,
     ),
     pixel_loss=dict(type='CharbonnierLoss', loss_weight=1.0, reduction='mean'),
     data_preprocessor=dict(
@@ -45,11 +48,11 @@ optim_wrapper = dict(
         type='AmpOptimWrapper',
         optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 400
+max_epochs = 800
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
-    dict(type='CosineAnnealingLR', by_epoch=True, begin=15, T_max=400, convert_to_iter_based=True)]
+    dict(type='CosineAnnealingLR', by_epoch=True, begin=15, T_max=max_epochs, convert_to_iter_based=True)]
 
 train_cfg = dict(by_epoch=True, max_epochs=max_epochs)
 
