@@ -1,5 +1,5 @@
 """
-params 19.122 M, FLOPs 7.210 G
+params 12072486 GFLOPs 5.869288816
 """
 
 _base_ = [
@@ -8,7 +8,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v0'
+ver = 'v2'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -17,8 +17,14 @@ model = dict(
     type='BaseEditModel',
     generator=dict(
         type='MM_VSSM',
-        depths=[2,2,2,2],
+        depths=[1,1,1,1],
         dims=96,
+        pixel_branch=True,
+        bi_scan=True,
+        final_refine=True,
+        merge_attn=True,
+        pos_embed=True,
+        last_skip=True,
         patch_size=4,
     ),
     pixel_loss=dict(type='CharbonnierLoss', loss_weight=1.0, reduction='mean'),
@@ -42,7 +48,7 @@ max_epochs = 400
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
-    dict(type='CosineAnnealingLR', by_epoch=True, begin=15, T_max=max_epochs, convert_to_iter_based=True)]
+    dict(type='CosineAnnealingLR', by_epoch=True, begin=15, T_max=400, convert_to_iter_based=True)]
 
 train_cfg = dict(by_epoch=True, max_epochs=max_epochs)
 
@@ -53,4 +59,4 @@ auto_scale_lr = dict(enable=False)
 default_hooks = dict(logger=dict(interval=10))
 custom_hooks = [dict(type='BasicVisualizationHook', interval=6)]
 
-find_unused_parameter = True
+find_unused_parameter=False
