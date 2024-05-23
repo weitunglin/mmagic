@@ -175,7 +175,7 @@ class Evaluator(Evaluator):
             return {'No Metric': 'Nan'}
         metrics = {}
         for metric in self.metrics:
-            _results = metric.evaluate()
+            _results = metric.evaluate(1)
 
             # Check metric name conflicts
             for name in _results.keys():

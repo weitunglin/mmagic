@@ -1,16 +1,15 @@
 """
-v25
-bi_scan false
-dim 96 params 5.054 M, FLOPs 5.589 G
+v27
+lr * 2
 """
 
 _base_ = [
     '../_base_/default_runtime.py',
-    './uieb.py',
+    './uiebsmall.py',
     './lwmamba.py'
 ]
 
-ver = 'v26'
+ver = 'v29'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -23,7 +22,7 @@ model = dict(
         dims=96,
         pixel_branch=True,
         bi_scan=False,
-        final_refine=False,
+        final_refine=True,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,
@@ -49,9 +48,9 @@ val_dataloader = dict(batch_size=batch_size)
 optim_wrapper = dict(
     dict(
         type='AmpOptimWrapper',
-        optimizer=dict(type='AdamW', lr=0.0001, betas=(0.9, 0.999), weight_decay=0.5)))
+        optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 800
+max_epochs = 300
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
@@ -67,21 +66,3 @@ default_hooks = dict(logger=dict(interval=10))
 custom_hooks = [dict(type='BasicVisualizationHook', interval=10)]
 
 find_unused_parameter=False
-
-# Test Scripts
-visualizer = dict(
-    type='ConcatImageVisualizer',
-    fn_key='img_path',
-    img_keys=['pred_img'],
-    bgr2rgb=True)
-
-# visualizer = dict(
-#     type='ConcatImageVisualizer',
-#     vis_backends=vis_backends,
-#     fn_key='gt_path',
-#     img_keys=['gt_img', 'input', 'pred_img'],
-#     bgr2rgb=True)
-
-
-custom_hooks = [
-    dict(type='BasicVisualizationHook', interval=1)]

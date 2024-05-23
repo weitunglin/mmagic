@@ -13,6 +13,6 @@ auto_scale_lr=dict(_delete_=True,base_batch_size=8, enable=False)
 
 train_cfg = dict(by_epoch=True, max_epochs=800)
 val_cfg = dict(type='ValLoop')
-test_cfg = dict(type='TestLoop')
+test_cfg = dict(type='MultiTestLoop')
 
 find_unused_parameters = True

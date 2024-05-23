@@ -1,7 +1,8 @@
 """
-v25
-bi_scan false
-dim 96 params 5.054 M, FLOPs 5.589 G
+v26
+dim 120
+final refine true
+params 7.700 M, FLOPs 8.118 G
 """
 
 _base_ = [
@@ -10,7 +11,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v26'
+ver = 'v31'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -20,10 +21,10 @@ model = dict(
     generator=dict(
         type='MM_VSSM',
         depths=[1]*3,
-        dims=96,
+        dims=120,
         pixel_branch=True,
         bi_scan=False,
-        final_refine=False,
+        final_refine=True,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,
@@ -64,24 +65,24 @@ visualizer = dict(
 
 auto_scale_lr = dict(enable=False)
 default_hooks = dict(logger=dict(interval=10))
-custom_hooks = [dict(type='BasicVisualizationHook', interval=10)]
+custom_hooks = [dict(type='BasicVisualizationHook', interval=15)]
 
 find_unused_parameter=False
 
 # Test Scripts
-visualizer = dict(
-    type='ConcatImageVisualizer',
-    fn_key='img_path',
-    img_keys=['pred_img'],
-    bgr2rgb=True)
-
 # visualizer = dict(
 #     type='ConcatImageVisualizer',
-#     vis_backends=vis_backends,
-#     fn_key='gt_path',
-#     img_keys=['gt_img', 'input', 'pred_img'],
+#     fn_key='img_path',
+#     img_keys=['pred_img'],
 #     bgr2rgb=True)
 
+# # visualizer = dict(
+# #     type='ConcatImageVisualizer',
+# #     vis_backends=vis_backends,
+# #     fn_key='gt_path',
+# #     img_keys=['gt_img', 'input', 'pred_img'],
+# #     bgr2rgb=True)
 
-custom_hooks = [
-    dict(type='BasicVisualizationHook', interval=1)]
+
+# custom_hooks = [
+#     dict(type='BasicVisualizationHook', interval=1)]

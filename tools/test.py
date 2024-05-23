@@ -85,11 +85,11 @@ def main():
 
     #     runner.register_hook(SaveMetricHook(), 'LOWEST')
 
-    cfg.work_dir = osp.join(cfg.work_dir, 'val')
-    cfg.test_dataloader = cfg.val_dataloader
-    cfg.test_evaluator = cfg.val_evaluator
-    runner = Runner.from_cfg(cfg)
-    runner.test()
+    # cfg.work_dir = osp.join(cfg.work_dir, 'val')
+    # cfg.test_dataloader = cfg.val_dataloader
+    # cfg.test_evaluator = cfg.val_evaluator
+    # runner = Runner.from_cfg(cfg)
+    # runner.test()
 
 
 if __name__ == '__main__':

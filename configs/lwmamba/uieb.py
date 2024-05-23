@@ -114,7 +114,7 @@ val_dataloader = dict(
     ),
 )
 
-test_dataloader = dict(
+t90_dataloader = dict(
     batch_size=8,
     num_workers=8,
     persistent_workers=True,
@@ -122,12 +122,78 @@ test_dataloader = dict(
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
         type='BasicImageDataset',
-        metainfo=dict(dataset_type='UIEB', task_name='denoising'),
-        data_root=data_root+'test',
-        data_prefix=dict(img='.'),
-        pipeline=test_pipeline
+        metainfo=dict(dataset_type='t90', task_name='denoising'),
+        data_root=data_root+'valid_t90',
+        data_prefix=dict(img='.', gt='.'),
+        pipeline=val_pipeline
     ),
 )
+
+c60_dataloader = dict(
+    batch_size=8,
+    num_workers=8,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type='BasicImageDataset',
+        metainfo=dict(dataset_type='c60', task_name='denoising'),
+        data_root=data_root+'test',
+        data_prefix=dict(img='.', gt='.'),
+        pipeline=val_pipeline
+    ),
+)
+
+uccs_blue_dataroot = '/home/allen/workspace/Realworld-Underwater-Image-Enhancement-RUIE-Benchmark/UCCS/blue'
+uccs_blue_dataloader = dict(
+    batch_size=8,
+    num_workers=8,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type='BasicImageDataset',
+        metainfo=dict(dataset_type='uccsblue', task_name='denoising'),
+        data_root=uccs_blue_dataroot,
+        data_prefix=dict(img='.', gt='.'),
+        pipeline=val_pipeline
+    ),
+)
+
+uccs_green_dataroot = '/home/allen/workspace/Realworld-Underwater-Image-Enhancement-RUIE-Benchmark/UCCS/green'
+uccs_green_dataloader = dict(
+    batch_size=8,
+    num_workers=8,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type='BasicImageDataset',
+        metainfo=dict(dataset_type='uccsgreen', task_name='denoising'),
+        data_root=uccs_green_dataroot,
+        data_prefix=dict(img='.', gt='.'),
+        pipeline=val_pipeline
+    ),
+)
+
+
+uccs_blue_green_dataroot = '/home/allen/workspace/Realworld-Underwater-Image-Enhancement-RUIE-Benchmark/UCCS/blue-green'
+uccs_blue_green_dataloader = dict(
+    batch_size=8,
+    num_workers=8,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type='BasicImageDataset',
+        metainfo=dict(dataset_type='uccsbluegreen', task_name='denoising'),
+        data_root=uccs_blue_green_dataroot,
+        data_prefix=dict(img='.', gt='.'),
+        pipeline=val_pipeline
+    ),
+)
+
+test_dataloader = [t90_dataloader, c60_dataloader, uccs_green_dataloader, uccs_blue_dataloader, uccs_blue_green_dataloader]
 
 evaluator = [
     dict(type='MAE', prefix='uie'),
@@ -136,6 +202,23 @@ evaluator = [
     dict(type='PSNR', prefix='uie'),
 ]
 
+
+c60_evaluator = [
+    dict(type='MAE', prefix='c60'),
+]
+t90_evaluator = [
+    dict(type='MAE', prefix='t90'),
+]
+uccsgreen_evaluator = [
+    dict(type='MAE', prefix='uccsgreen'),
+]
+uccsblue_evaluator = [
+    dict(type='MAE', prefix='uccsblue'),
+]
+uccsbluegreen_evaluator = [
+    dict(type='MAE', prefix='uccsbluegreen'),
+]
+
 val_evaluator = evaluator
 
-test_evaluator = []
+test_evaluator = [t90_evaluator,c60_evaluator,uccsgreen_evaluator,uccsblue_evaluator,uccsbluegreen_evaluator]
