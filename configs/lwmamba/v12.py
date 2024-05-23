@@ -1,14 +1,15 @@
 """
-params 14.978 M, FLOPs 5.459 G
+v11 w/o pixel_branch
 """
 
+mode = 'small'
 _base_ = [
     '../_base_/default_runtime.py',
-    './uieb.py',
+    './uiebsmall.py',
     './lwmamba.py'
 ]
 
-ver = 'v10'
+ver = 'v12'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -19,7 +20,7 @@ model = dict(
         type='MM_VSSM',
         depths=[1,1,1,1],
         dims=96,
-        pixel_branch=True,
+        pixel_branch=False,
         bi_scan=True,
         final_refine=False,
         merge_attn=True,
@@ -50,7 +51,7 @@ optim_wrapper = dict(
         type='AmpOptimWrapper',
         optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 400
+max_epochs = 300
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
@@ -66,3 +67,4 @@ default_hooks = dict(logger=dict(interval=10))
 custom_hooks = [dict(type='BasicVisualizationHook', interval=10)]
 
 find_unused_parameter=False
+fp16=True

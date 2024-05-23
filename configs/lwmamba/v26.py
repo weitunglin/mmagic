@@ -1,5 +1,7 @@
 """
-params 14.978 M, FLOPs 5.459 G
+v25
+dim 96 params 4.738 M, FLOPs 4.208 G
+dim 144 params 10.316 M, FLOPs 8.531 G
 """
 
 _base_ = [
@@ -8,7 +10,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v10'
+ver = 'v26'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -17,21 +19,20 @@ model = dict(
     type='BaseEditModel',
     generator=dict(
         type='MM_VSSM',
-        depths=[1,1,1,1],
+        depths=[1]*3,
         dims=96,
         pixel_branch=True,
-        bi_scan=True,
+        bi_scan=False,
         final_refine=False,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,
         patch_size=4,
-        mamba_up=False,
-        conv_down=False,
+        mamba_up=True,
         unet_down=False,
         unet_up=False,
-        constrain_ss2d_expand=False,
-        no_act_branch=False
+        conv_down=False,
+        no_act_branch=True,
     ),
     pixel_loss=dict(type='CharbonnierLoss', loss_weight=1.0, reduction='mean'),
     data_preprocessor=dict(
@@ -41,16 +42,16 @@ model = dict(
     )
 )
 
-batch_size = 16
+batch_size = 8
 train_dataloader = dict(batch_size=batch_size)
 val_dataloader = dict(batch_size=batch_size)
 
 optim_wrapper = dict(
     dict(
         type='AmpOptimWrapper',
-        optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
+        optimizer=dict(type='AdamW', lr=0.0001, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 400
+max_epochs = 800
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),

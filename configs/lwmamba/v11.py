@@ -4,11 +4,11 @@ params 14.978 M, FLOPs 5.459 G
 
 _base_ = [
     '../_base_/default_runtime.py',
-    './uieb.py',
+    './uiebsmall.py',
     './lwmamba.py'
 ]
 
-ver = 'v10'
+ver = 'v11'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -50,7 +50,7 @@ optim_wrapper = dict(
         type='AmpOptimWrapper',
         optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 400
+max_epochs = 300
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
