@@ -1,9 +1,14 @@
 """
 v26
-dim 108
+dim 96
 lr * 2
-final refine true
-params 6.309 M, FLOPs 6.739 G
+pos_embed true
+pixel_pos_embed true
+final_refine false
+bi_scan true
+pixel_bi_scan false
+add norm in mamba_up
+params 4.755 M, FLOPs 4.712 G
 """
 
 _base_ = [
@@ -12,7 +17,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v31'
+ver = 'v35'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -22,10 +27,10 @@ model = dict(
     generator=dict(
         type='MM_VSSM',
         depths=[1]*3,
-        dims=108,
+        dims=96,
         pixel_branch=True,
-        bi_scan=False,
-        final_refine=True,
+        bi_scan=True,
+        final_refine=False,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,
@@ -71,12 +76,12 @@ custom_hooks = [dict(type='BasicVisualizationHook', interval=15)]
 find_unused_parameter=False
 
 # Test Scripts
-visualizer = dict(
-    type='ConcatImageVisualizer',
-    fn_key='img_path',
-    img_keys=['pred_img'],
-    bgr2rgb=True)
+# visualizer = dict(
+#     type='ConcatImageVisualizer',
+#     fn_key='img_path',
+#     img_keys=['pred_img'],
+#     bgr2rgb=True)
 
 
-custom_hooks = [
-    dict(type='BasicVisualizationHook', interval=1)]
+# custom_hooks = [
+#     dict(type='BasicVisualizationHook', interval=1)]

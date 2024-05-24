@@ -1,18 +1,15 @@
 """
-v26
-dim 108
-lr * 2
-final refine true
-params 6.309 M, FLOPs 6.739 G
+v32
+pos_embed false
 """
 
 _base_ = [
     '../_base_/default_runtime.py',
-    './uieb.py',
+    './uiebsmall.py',
     './lwmamba.py'
 ]
 
-ver = 'v31'
+ver = 'v34'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -22,12 +19,12 @@ model = dict(
     generator=dict(
         type='MM_VSSM',
         depths=[1]*3,
-        dims=108,
+        dims=96,
         pixel_branch=True,
         bi_scan=False,
-        final_refine=True,
+        final_refine=False,
         merge_attn=True,
-        pos_embed=True,
+        pos_embed=False,
         last_skip=False,
         patch_size=4,
         mamba_up=True,
@@ -53,7 +50,7 @@ optim_wrapper = dict(
         type='AmpOptimWrapper',
         optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 800
+max_epochs = 300
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
@@ -66,17 +63,6 @@ visualizer = dict(
 
 auto_scale_lr = dict(enable=False)
 default_hooks = dict(logger=dict(interval=10))
-custom_hooks = [dict(type='BasicVisualizationHook', interval=15)]
+custom_hooks = [dict(type='BasicVisualizationHook', interval=10)]
 
 find_unused_parameter=False
-
-# Test Scripts
-visualizer = dict(
-    type='ConcatImageVisualizer',
-    fn_key='img_path',
-    img_keys=['pred_img'],
-    bgr2rgb=True)
-
-
-custom_hooks = [
-    dict(type='BasicVisualizationHook', interval=1)]

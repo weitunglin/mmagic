@@ -1,6 +1,6 @@
 """
 v27
-lr * 0.5
+lr * 4
 """
 
 _base_ = [
@@ -48,7 +48,7 @@ val_dataloader = dict(batch_size=batch_size)
 optim_wrapper = dict(
     dict(
         type='AmpOptimWrapper',
-        optimizer=dict(type='AdamW', lr=0.0002, betas=(0.9, 0.999), weight_decay=0.5)))
+        optimizer=dict(type='AdamW', lr=0.0004, betas=(0.9, 0.999), weight_decay=0.5)))
 
 max_epochs = 300
 param_scheduler = [
