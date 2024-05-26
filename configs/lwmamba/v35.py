@@ -9,6 +9,56 @@ bi_scan true
 pixel_bi_scan false
 add norm in mamba_up
 params 4.755 M, FLOPs 4.712 G
+
+(iter 65100)
+Start evalutaing T90
+PSNR:  23.02754875151631
+SSIM:  0.9036804840834248
+MSE:  0.006710717418144353
+UCIQE:  0.6134897302942766
+UIQM:  3.0641833587405647
+NIQE:  5.5666267961583396
+URanker: 2.106252442465888
+MUSIQ: 52.226990932888455
+
+Start evalutaing C60
+UCIQE:  0.5850501401381399
+UIQM:  2.847291724901027
+NIQE:  6.463686736791108
+URanker: 1.4492208523054917
+MUSIQ: 47.89262323379516
+
+Start evalutaing UCCS
+UCIQE:  0.5632138140141492
+UIQM:  3.0786805874585186
+NIQE:  4.747039970662977
+URanker: 1.4191775837556149
+MUSIQ: 31.20110596338908
+
+(iter 67300)
+Start evalutaing T90
+PSNR:  23.01197671609066
+SSIM:  0.9054121777430139
+MSE:  0.006689331085106434
+UCIQE:  0.616296777129065
+UIQM:  3.0215261012149104
+NIQE:  5.54379714448092
+URanker: 2.1446015222205057
+MUSIQ: 52.23958034515381
+
+Start evalutaing C60
+UCIQE:  0.5862219578172163
+UIQM:  2.8030652651504915
+NIQE:  6.430014264353377
+URanker: 1.4739552782538037
+MUSIQ: 47.81066004435221
+
+Start evalutaing UCCS
+UCIQE:  0.5648749016108965
+UIQM:  3.053188766680085
+NIQE:  4.751180645290585
+URanker: 1.471603610276555
+MUSIQ: 31.151692145665486
 """
 
 _base_ = [
@@ -76,12 +126,12 @@ custom_hooks = [dict(type='BasicVisualizationHook', interval=15)]
 find_unused_parameter=False
 
 # Test Scripts
-# visualizer = dict(
-#     type='ConcatImageVisualizer',
-#     fn_key='img_path',
-#     img_keys=['pred_img'],
-#     bgr2rgb=True)
+visualizer = dict(
+    type='ConcatImageVisualizer',
+    fn_key='img_path',
+    img_keys=['pred_img'],
+    bgr2rgb=True)
 
 
-# custom_hooks = [
-#     dict(type='BasicVisualizationHook', interval=1)]
+custom_hooks = [
+    dict(type='BasicVisualizationHook', interval=1)]

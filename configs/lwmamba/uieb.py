@@ -193,7 +193,6 @@ uccs_blue_green_dataloader = dict(
     ),
 )
 
-test_dataloader = [t90_dataloader, c60_dataloader, uccs_green_dataloader, uccs_blue_dataloader, uccs_blue_green_dataloader]
 
 evaluator = [
     dict(type='MAE', prefix='uie'),
@@ -204,7 +203,9 @@ evaluator = [
 
 
 c60_evaluator = [
-    dict(type='MAE', prefix='c60'),
+    dict(type='MAE', prefix='60'),
+    # dict(type='UIQM', prefix='c60'),
+    # dict(type='UCIQE', prefix='c60'),
 ]
 t90_evaluator = [
     dict(type='MAE', prefix='t90'),
@@ -221,4 +222,8 @@ uccsbluegreen_evaluator = [
 
 val_evaluator = evaluator
 
+test_dataloader = [t90_dataloader, c60_dataloader, uccs_green_dataloader, uccs_blue_dataloader, uccs_blue_green_dataloader]
 test_evaluator = [t90_evaluator,c60_evaluator,uccsgreen_evaluator,uccsblue_evaluator,uccsbluegreen_evaluator]
+
+# test_dataloader = [c60_dataloader]
+# test_evaluator = [c60_evaluator]

@@ -1,6 +1,7 @@
 """
 v29
 final_refine false
+uie/MAE: 0.0686  uie/MSE: 0.0079  uie/SSIM: 0.8688  uie/PSNR: 22.1979  data_time: 0.0230  time: 0.2901
 """
 
 _base_ = [

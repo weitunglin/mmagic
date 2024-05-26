@@ -1,5 +1,6 @@
 """
 v18 w/o mamba_up
+uie/MAE: 0.0739  uie/MSE: 0.0090  uie/SSIM: 0.8497  uie/PSNR: 21.5498  data_time: 0.0228  time: 0.2650
 """
 
 mode = 'small'

@@ -2,6 +2,7 @@
 v18
 params 4.738 M, FLOPs 4.208 G
 layers 4 to 3, patch_size 2 to 4
+uie/MAE: 0.0737  uie/MSE: 0.0089  uie/SSIM: 0.8469  uie/PSNR: 21.5235
 """
 
 mode = 'small'

@@ -17,6 +17,8 @@ from .sad import SAD
 from .snr import SNR, snr
 from .ssim import SSIM, ssim
 from .swd import SlicedWassersteinDistance
+from .uiqm import UIQM
+from .uciqe import UCIQE
 
 __all__ = [
     'MAE',
@@ -42,4 +44,6 @@ __all__ = [
     'NIQE',
     'niqe',
     'Equivariance',
+    'UIQM',
+    'UCIQE'
 ]

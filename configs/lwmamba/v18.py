@@ -1,5 +1,6 @@
 """
 v16 with bi_scan (xy)
+uie/MAE: 0.0713  uie/MSE: 0.0083  uie/SSIM: 0.8680  uie/PSNR: 21.8812  data_time: 0.0212  time: 0.2706
 """
 
 mode = 'small'

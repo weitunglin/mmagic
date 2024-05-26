@@ -1,16 +1,16 @@
 """
-v16 w/o pixel_branch
-uie/MAE: 0.0721  uie/MSE: 0.0086  uie/SSIM: 0.8563  uie/PSNR: 21.6084  data_time: 0.0212  time: 0.2419
+v35
+lr 1e-4
+params 4.755 M, FLOPs 4.713 G
 """
 
-mode = 'small'
 _base_ = [
     '../_base_/default_runtime.py',
-    './uiebsmall.py',
+    './uieb.py',
     './lwmamba.py'
 ]
 
-ver = 'v17'
+ver = 'v36'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -19,15 +19,15 @@ model = dict(
     type='BaseEditModel',
     generator=dict(
         type='MM_VSSM',
-        depths=[1]*4,
-        dims=[96,96,96,96],
-        pixel_branch=False,
-        bi_scan='xs',
+        depths=[1]*3,
+        dims=96,
+        pixel_branch=True,
+        bi_scan=True,
         final_refine=False,
         merge_attn=True,
         pos_embed=True,
         last_skip=False,
-        patch_size=2,
+        patch_size=4,
         mamba_up=True,
         unet_down=False,
         unet_up=False,
@@ -49,9 +49,9 @@ val_dataloader = dict(batch_size=batch_size)
 optim_wrapper = dict(
     dict(
         type='AmpOptimWrapper',
-        optimizer=dict(type='AdamW', lr=0.0001, betas=(0.9, 0.999), weight_decay=0.5)))
+        optimizer=dict(type='AdamW', lr=0.00015, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 300
+max_epochs = 800
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
@@ -64,6 +64,17 @@ visualizer = dict(
 
 auto_scale_lr = dict(enable=False)
 default_hooks = dict(logger=dict(interval=10))
-custom_hooks = [dict(type='BasicVisualizationHook', interval=10)]
+custom_hooks = [dict(type='BasicVisualizationHook', interval=15)]
 
 find_unused_parameter=False
+
+# Test Scripts
+# visualizer = dict(
+#     type='ConcatImageVisualizer',
+#     fn_key='img_path',
+#     img_keys=['pred_img'],
+#     bgr2rgb=True)
+
+
+# custom_hooks = [
+#     dict(type='BasicVisualizationHook', interval=1)]
