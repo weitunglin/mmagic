@@ -1,28 +1,5 @@
 """
 params 8.240 M, FLOPs 7.604 G
-
-(iter 32550)
-Start evalutaing T90
-PSNR:  23.126570392305595
-SSIM:  0.9079349487529392
-MSE:  0.006720991158408346
-UCIQE:  0.6189887477482724
-UIQM:  3.0244727035499572
-NIQE:  5.542212017975314
-URanker: 2.186109745502472
-MUSIQ: 52.26793950398763
-Start evalutaing C60
-UCIQE:  0.5890394415646327
-UIQM:  2.863269816853897
-NIQE:  6.246480945755139
-URanker: 1.5733595593521992
-MUSIQ: 47.875686740875246
-Start evalutaing UCCS
-UCIQE:  0.5674004559138035
-UIQM:  3.05952461978902
-NIQE:  4.68853431519631
-URanker: 1.47771750714009
-MUSIQ: 31.365577017466226
 """
 
 _base_ = [
@@ -31,7 +8,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'v40'
+ver = 'v42'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -72,7 +49,7 @@ optim_wrapper = dict(
         type='AmpOptimWrapper',
         optimizer=dict(type='AdamW', lr=0.0004, betas=(0.9, 0.999), weight_decay=0.5)))
 
-max_epochs = 800
+max_epochs = 400
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=1e-3, by_epoch=True, begin=0, end=15),
@@ -93,12 +70,12 @@ custom_hooks = [dict(type='BasicVisualizationHook', interval=5)]
 find_unused_parameter=False
 
 # Test Scripts
-visualizer = dict(
-    type='ConcatImageVisualizer',
-    fn_key='img_path',
-    img_keys=['pred_img'],
-    bgr2rgb=True)
+# visualizer = dict(
+#     type='ConcatImageVisualizer',
+#     fn_key='img_path',
+#     img_keys=['pred_img'],
+#     bgr2rgb=True)
 
 
-custom_hooks = [
-    dict(type='BasicVisualizationHook', interval=1)]
+# custom_hooks = [
+#     dict(type='BasicVisualizationHook', interval=1)]
