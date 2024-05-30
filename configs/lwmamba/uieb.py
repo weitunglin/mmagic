@@ -1,4 +1,4 @@
-img_scale = (256, 256)
+img_scale = (256,256)
 
 pipeline = [
     dict(
