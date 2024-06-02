@@ -1,4 +1,5 @@
-img_scale = (256,256)
+train_img_scale = (256, 256)
+val_img_scale = (256, 256)
 
 pipeline = [
     dict(
@@ -16,7 +17,7 @@ pipeline = [
     dict(
         type='Resize',
         keys=['img', 'gt'],
-        scale=img_scale,
+        scale=train_img_scale,
     ),
     dict(type='PackInputs')
 ]
@@ -37,7 +38,7 @@ train_pipeline = [
     dict(
         type='Resize',
         keys=['img', 'gt'],
-        scale=img_scale,
+        scale=train_img_scale,
     ),
     dict(type='Flip',
         keys=['img', 'gt'],
@@ -62,7 +63,7 @@ val_pipeline = [
     dict(
         type='Resize',
         keys=['img', 'gt'],
-        scale=img_scale,
+        scale=val_img_scale,
     ),
     dict(type='PackInputs')
 ]
@@ -77,7 +78,7 @@ test_pipeline = [
     dict(
         type='Resize',
         keys=['img'],
-        scale=img_scale,
+        scale=val_img_scale,
     ),
     dict(type='PackInputs')
 ]
