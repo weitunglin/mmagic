@@ -69,6 +69,7 @@ model = dict(
         pixel_block_num=2,
         pixel_bi_scan=False,
         pixel_d_state=12,
+        bpe=True,
         bi_scan=True,
         final_refine=False,
         merge_attn=True,
@@ -116,12 +117,12 @@ custom_hooks = [dict(type='BasicVisualizationHook', interval=5)]
 find_unused_parameter=False
 
 # Test Scripts
-visualizer = dict(
-    type='ConcatImageVisualizer',
-    fn_key='img_path',
-    img_keys=['pred_img'],
-    bgr2rgb=True)
+# visualizer = dict(
+#     type='ConcatImageVisualizer',
+#     fn_key='img_path',
+#     img_keys=['pred_img'],
+#     bgr2rgb=True)
 
 
-custom_hooks = [
-    dict(type='BasicVisualizationHook', interval=1)]
+# custom_hooks = [
+#     dict(type='BasicVisualizationHook', interval=1)]

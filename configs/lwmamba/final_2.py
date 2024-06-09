@@ -1,6 +1,5 @@
 """
-w/o bpe
-params 8.682 M, FLOPs 7.602 G
+params 8.682 M, FLOPs 7.606 G
 """
 
 _base_ = [
@@ -9,7 +8,7 @@ _base_ = [
     './lwmamba.py'
 ]
 
-ver = 'ablate_d'
+ver = 'final_2'
 experiment_name = f'lwmamba_uieb_{ver}'
 work_dir = f'./work_dirs/{experiment_name}'
 save_dir = './work_dirs/'
@@ -24,7 +23,7 @@ model = dict(
         pixel_block_num=2,
         pixel_bi_scan=False,
         pixel_d_state=12,
-        bpe=False,
+        bpe=True,
         bi_scan=True,
         final_refine=False,
         merge_attn=True,
@@ -72,12 +71,12 @@ custom_hooks = [dict(type='BasicVisualizationHook', interval=5)]
 find_unused_parameter=False
 
 # Test Scripts
-# visualizer = dict(
-#     type='ConcatImageVisualizer',
-#     fn_key='img_path',
-#     img_keys=['pred_img'],
-#     bgr2rgb=True)
+visualizer = dict(
+    type='ConcatImageVisualizer',
+    fn_key='img_path',
+    img_keys=['pred_img'],
+    bgr2rgb=True)
 
 
-# custom_hooks = [
-#     dict(type='BasicVisualizationHook', interval=1)]
+custom_hooks = [
+    dict(type='BasicVisualizationHook', interval=1)]
